@@ -1,0 +1,1038 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ebook seller form | Bridge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f6fa;
+        --sheet: #ffffff;
+        --ink: #14213d;
+        --muted: #566075;
+        --line: #dce2ec;
+        --accent: #1e3fae;
+        --accent-dark: #172f85;
+        --accent-soft: #e8edfb;
+        --momo: #f2b705;
+        --err: #b3261e;
+        --font:
+          "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", Roboto,
+          Arial, sans-serif;
+        --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font: 400 16px/1.6 var(--font);
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 28px 16px 72px;
+      }
+
+      /* Brand header */
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--accent);
+        margin-bottom: 28px;
+      }
+      .brand svg {
+        width: 34px;
+        height: 22px;
+        flex: none;
+      }
+      .brand span {
+        font-weight: 800;
+        font-size: 20px;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+      h1 {
+        font-weight: 800;
+        font-size: clamp(32px, 7.5vw, 48px);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        margin: 0 0 12px;
+      }
+      .intro {
+        color: var(--muted);
+        max-width: 56ch;
+        margin: 0;
+      }
+      .arch {
+        display: block;
+        width: 100%;
+        height: auto;
+        color: var(--accent);
+        margin: 24px 0 20px;
+      }
+      .arch {
+        animation: build 0.9s var(--ease-out) 0.1s both;
+      }
+      @keyframes build {
+        from {
+          clip-path: inset(0 100% 0 0);
+        }
+        to {
+          clip-path: inset(0 0 0 0);
+        }
+      }
+      @keyframes fade {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Form sheet */
+      .sheet {
+        background: var(--sheet);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .step {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 26px 20px;
+        border-top: 1px solid var(--line);
+      }
+      .step:first-child {
+        border-top: 0;
+      }
+      .step.momo {
+        box-shadow: inset 4px 0 0 var(--momo);
+      }
+      .step-head h2 {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+        margin: 0 0 4px;
+      }
+      .step-head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+      @media (min-width: 800px) {
+        .step {
+          grid-template-columns: 210px 1fr;
+          gap: 36px;
+          padding: 34px 36px;
+        }
+        .step-head {
+          padding-top: 2px;
+        }
+      }
+      .field {
+        margin: 0 0 16px;
+      }
+      .fields > :last-child {
+        margin-bottom: 0;
+      }
+      label.q,
+      legend.q {
+        display: block;
+        font-weight: 600;
+        font-size: 15px;
+        margin: 0 0 6px;
+        padding: 0;
+      }
+      fieldset {
+        border: 0;
+        margin: 0 0 16px;
+        padding: 0;
+        min-width: 0;
+      }
+      .hint {
+        display: block;
+        color: var(--muted);
+        font-weight: 400;
+        font-size: 13px;
+        margin-top: 2px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="number"],
+      input[type="date"],
+      textarea {
+        width: 100%;
+        font: inherit;
+        color: inherit;
+        background: #fff;
+        border: 1px solid #c3ccdc;
+        border-radius: 6px;
+        padding: 10px 12px;
+        transition: border-color 0.15s ease;
+      }
+      textarea {
+        min-height: 88px;
+        resize: vertical;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: #8590a5;
+      }
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 1px;
+        border-color: var(--accent);
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      @media (max-width: 560px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .opts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .opts.stack {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .opt {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 9px 12px;
+        cursor: pointer;
+        background: #fff;
+        font-size: 15px;
+        line-height: 1.4;
+        transition:
+          background-color 0.15s ease,
+          border-color 0.15s ease;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        .opt:hover {
+          border-color: var(--accent);
+        }
+      }
+      .opt input {
+        margin: 3px 0 0;
+        accent-color: var(--accent);
+        flex: none;
+        width: 16px;
+        height: 16px;
+      }
+      .opt:has(input:checked) {
+        background: var(--accent-soft);
+        border-color: var(--accent);
+      }
+      .opt:has(input:focus-visible) {
+        outline: 3px solid var(--accent);
+        outline-offset: 1px;
+      }
+      .opt small {
+        display: block;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .req {
+        color: var(--err);
+      }
+
+      /* Reveal of dependent fields and the thank-you panel */
+      .reveal {
+        transition:
+          opacity 0.18s var(--ease-out),
+          transform 0.18s var(--ease-out);
+      }
+      @starting-style {
+        .reveal {
+          opacity: 0;
+          transform: translateY(-4px);
+        }
+      }
+
+      /* Send */
+      .actions {
+        padding: 22px 20px;
+        border-top: 1px solid var(--line);
+        background: #fafbfd;
+      }
+      @media (min-width: 800px) {
+        .actions {
+          padding: 26px 36px;
+        }
+      }
+      button {
+        font: 700 16px var(--font);
+        background: var(--accent);
+        color: #fff;
+        border: 0;
+        border-radius: 8px;
+        padding: 14px 32px;
+        cursor: pointer;
+        width: 100%;
+        transition:
+          background-color 0.15s ease,
+          transform 0.12s var(--ease-out);
+      }
+      @media (min-width: 561px) {
+        button {
+          width: auto;
+        }
+      }
+      @media (hover: hover) and (pointer: fine) {
+        button:hover {
+          background: var(--accent-dark);
+        }
+      }
+      button:active {
+        transform: scale(0.98);
+      }
+      button:focus-visible {
+        outline: 3px solid var(--ink);
+        outline-offset: 2px;
+      }
+      button[disabled] {
+        opacity: 0.6;
+        cursor: wait;
+      }
+      #status {
+        margin-top: 12px;
+        font-weight: 500;
+        min-height: 1.6em;
+      }
+      #status.err {
+        color: var(--err);
+      }
+
+      .thanks {
+        background: var(--sheet);
+        border: 1px solid var(--line);
+        border-left: 4px solid var(--accent);
+        border-radius: 12px;
+        padding: 30px 22px;
+      }
+      .thanks h2 {
+        font-weight: 800;
+        font-size: 26px;
+        letter-spacing: -0.02em;
+        margin: 0 0 8px;
+      }
+      .thanks p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .trap {
+        position: absolute;
+        left: -9999px;
+        height: 0;
+        width: 0;
+        overflow: hidden;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arch {
+          animation: fade 0.4s ease both;
+        }
+        @starting-style {
+          .reveal {
+            transform: none;
+          }
+        }
+        button:active {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header id="top">
+        <div class="brand">
+          <svg
+            viewBox="0 0 34 22"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M2 20 Q17 -6 32 20" />
+            <path d="M2 20H32" />
+          </svg>
+          <span>Bridge</span>
+        </div>
+        <h1>Ebook seller form</h1>
+        <p class="intro" id="intro">
+          Fill this in and press Send. Your answers reach Bridge by email. Only
+          fields marked <span class="req">*</span> are required. Write “Not
+          sure” where you need help.
+        </p>
+        <svg
+          class="arch"
+          viewBox="0 0 640 44"
+          preserveAspectRatio="none"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path stroke-width="2" d="M1 40H639" />
+          <path
+            stroke-width="1.6"
+            d="M1 40Q81 -10 161 40Q241 -10 321 40Q401 -10 481 40Q561 -10 639 40"
+          />
+        </svg>
+      </header>
+
+      <form
+        id="f"
+        action="https://formsubmit.co/ajax/rawlingsnsame@gmail.com"
+        method="POST"
+      >
+        <input
+          type="hidden"
+          name="_subject"
+          value="Ebook seller form: new project"
+        />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <div class="trap" aria-hidden="true">
+          <label
+            >Leave empty
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off"
+          /></label>
+        </div>
+
+        <div class="sheet">
+          <section class="step">
+            <div class="step-head">
+              <h2>1. Your publishing house</h2>
+              <p>So we can reply and prepare your invoice.</p>
+            </div>
+            <div class="fields">
+              <div class="field">
+                <label class="q" for="ph"
+                  >Publishing house name <span class="req">*</span></label
+                ><input
+                  id="ph"
+                  name="Publishing house name"
+                  type="text"
+                  required
+                />
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label class="q" for="wa"
+                    >WhatsApp number <span class="req">*</span></label
+                  ><input
+                    id="wa"
+                    name="WhatsApp number"
+                    type="tel"
+                    required
+                    autocomplete="tel"
+                  />
+                </div>
+                <div class="field">
+                  <label class="q" for="em"
+                    >Email <span class="req">*</span></label
+                  ><input
+                    id="em"
+                    name="email"
+                    type="email"
+                    required
+                    autocomplete="email"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="step">
+            <div class="step-head">
+              <h2>2. Website content</h2>
+              <p>What visitors will see about you.</p>
+            </div>
+            <div class="fields">
+              <div class="field">
+                <label class="q" for="tag">Slogan or tagline</label
+                ><input id="tag" name="Tagline" type="text" />
+              </div>
+              <div class="field">
+                <label class="q" for="about"
+                  >Short description of the publishing house
+                  <span class="hint">2 to 4 sentences</span></label
+                ><textarea id="about" name="About text"></textarea>
+              </div>
+              <div class="field">
+                <label class="q" for="addr">Address</label
+                ><input
+                  id="addr"
+                  name="Address"
+                  type="text"
+                  placeholder="Street, town, region"
+                />
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label class="q" for="pph">Phone number to show</label
+                  ><input id="pph" name="Public phone" type="tel" />
+                </div>
+                <div class="field">
+                  <label class="q" for="pem">Email to show</label
+                  ><input id="pem" name="Public email" type="email" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label class="q" for="fb">Facebook</label
+                  ><input
+                    id="fb"
+                    name="Facebook"
+                    type="text"
+                    placeholder="Link or page name"
+                  />
+                </div>
+                <div class="field">
+                  <label class="q" for="ig">Instagram</label
+                  ><input id="ig" name="Instagram" type="text" />
+                </div>
+                <div class="field">
+                  <label class="q" for="tt">TikTok</label
+                  ><input id="tt" name="TikTok" type="text" />
+                </div>
+                <div class="field">
+                  <label class="q" for="yt">YouTube</label
+                  ><input id="yt" name="YouTube" type="text" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="step">
+            <div class="step-head">
+              <h2>3. Your books</h2>
+              <p>The site sells PDF books only. Prices are in XAF.</p>
+            </div>
+            <div class="fields">
+              <div class="row">
+                <div class="field">
+                  <label class="q" for="n">How many books at launch?</label
+                  ><input
+                    id="n"
+                    name="Number of books at launch"
+                    type="number"
+                    min="0"
+                  />
+                </div>
+                <div class="field">
+                  <label class="q" for="cat">Main categories</label
+                  ><input
+                    id="cat"
+                    name="Book categories"
+                    type="text"
+                    placeholder="e.g. Novels, Textbooks"
+                  />
+                </div>
+              </div>
+              <fieldset>
+                <legend class="q">
+                  Must customers create an account to buy?
+                </legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Account required"
+                      value="Yes, account"
+                    />Yes</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Account required"
+                      value="No, guest checkout"
+                    />No, guest checkout</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Account required"
+                      value="Not sure"
+                    />Not sure</label
+                  >
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend class="q">Who will add new books after launch?</legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Who adds books"
+                      value="Me, I need a simple dashboard"
+                    />Me, I need a simple dashboard</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Who adds books"
+                      value="The developer"
+                    />The developer</label
+                  >
+                </div>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="step momo">
+            <div class="step-head">
+              <h2>4. MTN Mobile Money</h2>
+              <p>How your customers will pay you.</p>
+            </div>
+            <div class="fields">
+              <div class="row">
+                <div class="field">
+                  <label class="q" for="mn">MTN MoMo number for payments</label
+                  ><input id="mn" name="MoMo number" type="tel" />
+                </div>
+                <div class="field">
+                  <label class="q" for="mnm">Name registered on it</label
+                  ><input id="mnm" name="MoMo registered name" type="text" />
+                </div>
+              </div>
+              <fieldset>
+                <legend class="q">Payment method</legend>
+                <div class="opts stack">
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="MoMo method"
+                      value="A: Manual"
+                    /><span
+                      ><strong>Manual</strong
+                      ><small
+                        >Customer pays to your number and enters the transaction
+                        ID. You confirm each payment.</small
+                      ></span
+                    ></label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="MoMo method"
+                      value="B: Automatic"
+                    /><span
+                      ><strong>Automatic</strong
+                      ><small
+                        >Customer approves on their phone and the PDF unlocks by
+                        itself. Needs business documents.</small
+                      ></span
+                    ></label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="MoMo method"
+                      value="Not sure"
+                    /><span><strong>Not sure, advise me</strong></span></label
+                  >
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend class="q">Which do you have?</legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Business documents"
+                      value="RCCM"
+                    />RCCM</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Business documents"
+                      value="Business bank account"
+                    />Business bank account</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Business documents"
+                      value="None"
+                    />None yet</label
+                  >
+                </div>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="step">
+            <div class="step-head">
+              <h2>5. Domain, hosting and email</h2>
+              <p>Used to prepare your invoice.</p>
+            </div>
+            <div class="fields">
+              <fieldset>
+                <legend class="q">Do you already have a domain name?</legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Has domain"
+                      value="Yes"
+                      data-show="dYes"
+                    />Yes</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Has domain"
+                      value="No"
+                      data-show="dNo"
+                    />No</label
+                  >
+                </div>
+              </fieldset>
+              <div class="field reveal hidden" id="dYes">
+                <label class="q" for="dom">Your domain</label
+                ><input
+                  id="dom"
+                  name="Existing domain"
+                  type="text"
+                  placeholder="e.g. yourpublisher.com"
+                />
+              </div>
+              <div class="field reveal hidden" id="dNo">
+                <label class="q" for="dpref"
+                  >Preferred domain names
+                  <span class="hint"
+                    >First, second and third choice</span
+                  ></label
+                ><input id="dpref" name="Preferred domains" type="text" />
+              </div>
+              <fieldset>
+                <legend class="q">Do you already have web hosting?</legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Has hosting"
+                      value="Yes"
+                      data-show="hYes"
+                    />Yes</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Has hosting"
+                      value="No"
+                    />No</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Has hosting"
+                      value="Not sure"
+                    />Not sure</label
+                  >
+                </div>
+              </fieldset>
+              <div class="field reveal hidden" id="hYes">
+                <label class="q" for="host">Hosting provider</label
+                ><input id="host" name="Hosting provider" type="text" />
+              </div>
+              <fieldset>
+                <legend class="q">
+                  Should Bridge set up the domain and hosting and include them
+                  in the invoice?
+                </legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Domain/hosting handled by"
+                      value="Developer, include in invoice"
+                    />Yes, include in invoice</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Domain/hosting handled by"
+                      value="Client arranges it"
+                    />No, I will arrange it</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Domain/hosting handled by"
+                      value="Not sure"
+                    />Not sure</label
+                  >
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend class="q">
+                  Do you want business email addresses (e.g.
+                  info@yourpublisher.com)?
+                </legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Business email"
+                      value="Yes"
+                    />Yes</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Business email"
+                      value="No"
+                    />No</label
+                  >
+                </div>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="step">
+            <div class="step-head">
+              <h2>6. Website basics</h2>
+              <p>A few choices to get started.</p>
+            </div>
+            <div class="fields">
+              <fieldset>
+                <legend class="q">Website language</legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Language"
+                      value="English"
+                    />English</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Language"
+                      value="French"
+                    />French</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="radio"
+                      name="Language"
+                      value="English and French"
+                    />Both</label
+                  >
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend class="q">
+                  Extra pages
+                  <span class="hint"
+                    >Home, Shop, About and Contact are included</span
+                  >
+                </legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Extra pages"
+                      value="Our Authors"
+                    />Our Authors</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Extra pages"
+                      value="Blog / News"
+                    />Blog / News</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Extra pages"
+                      value="FAQ"
+                    />FAQ</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Extra pages"
+                      value="Submit a manuscript"
+                    />Submit a manuscript</label
+                  >
+                </div>
+              </fieldset>
+              <div class="field">
+                <label class="q" for="col"
+                  >Brand colours
+                  <span class="hint"
+                    >Names or colour codes. Write “None” if you have none.</span
+                  ></label
+                ><input id="col" name="Brand colours" type="text" />
+              </div>
+              <div class="field">
+                <label class="q" for="ref"
+                  >One or two websites you like
+                  <span class="hint">Paste the links</span></label
+                ><textarea
+                  id="ref"
+                  name="Reference websites"
+                  style="min-height: 64px"
+                ></textarea>
+              </div>
+              <fieldset>
+                <legend class="q">
+                  I will send these by WhatsApp or email after submitting
+                </legend>
+                <div class="opts">
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Files to send"
+                      value="Logo"
+                    />Logo</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Files to send"
+                      value="Book covers"
+                    />Book covers</label
+                  >
+                  <label class="opt"
+                    ><input
+                      type="checkbox"
+                      name="Files to send"
+                      value="Book PDFs and details"
+                    />Book PDFs and details</label
+                  >
+                </div>
+              </fieldset>
+            </div>
+          </section>
+
+          <section class="step">
+            <div class="step-head">
+              <h2>7. Timeline and budget</h2>
+              <p>Helps plan the work.</p>
+            </div>
+            <div class="fields">
+              <div class="row">
+                <div class="field">
+                  <label class="q" for="ld">Desired launch date</label
+                  ><input id="ld" name="Launch date" type="date" />
+                </div>
+                <div class="field">
+                  <label class="q" for="bd">Budget (XAF)</label
+                  ><input id="bd" name="Budget" type="text" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="q" for="more">Anything else?</label
+                ><textarea
+                  id="more"
+                  name="Anything else"
+                  style="min-height: 64px"
+                ></textarea>
+              </div>
+            </div>
+          </section>
+
+          <div class="actions">
+            <button type="submit" id="send">Send</button>
+            <div id="status" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </form>
+
+      <div class="thanks reveal hidden" id="thanks" tabindex="-1">
+        <h2>Thank you, your form has been sent.</h2>
+        <p>
+          Bridge will contact you on WhatsApp shortly. Please send the files you
+          ticked in Section 6.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var f = document.getElementById("f"),
+          st = document.getElementById("status"),
+          btn = document.getElementById("send");
+        function $(id) {
+          return document.getElementById(id);
+        }
+        function sync() {
+          ["dYes", "dNo", "hYes"].forEach(function (id) {
+            $(id).classList.toggle(
+              "hidden",
+              !f.querySelector('input[data-show="' + id + '"]:checked'),
+            );
+          });
+        }
+        f.addEventListener("change", sync);
+        sync();
+        f.addEventListener("submit", function (e) {
+          e.preventDefault();
+          btn.disabled = true;
+          st.className = "";
+          st.textContent = "Sending…";
+          fetch(f.action, {
+            method: "POST",
+            body: new FormData(f),
+            headers: { Accept: "application/json" },
+          })
+            .then(function (r) {
+              if (!r.ok) throw new Error("failed");
+              f.classList.add("hidden");
+              $("intro").classList.add("hidden");
+              document.querySelector("h1").classList.add("hidden");
+              var t = $("thanks");
+              t.classList.remove("hidden");
+              t.focus();
+              window.scrollTo(0, 0);
+            })
+            .catch(function () {
+              st.className = "err";
+              st.textContent =
+                "Your form was not sent. Check your internet connection and try again. If it keeps failing, contact Bridge on WhatsApp.";
+              btn.disabled = false;
+            });
+        });
+      })();
+    </script>
+  </body>
+</html>
